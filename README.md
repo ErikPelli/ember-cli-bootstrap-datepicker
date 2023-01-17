@@ -10,11 +10,18 @@ It doesn't have any external dependecy except bootstrap-datepicker.
 
 [Online demo](http://sul.im/ember-cli-bootstrap-datepicker)
 
-## Installation
+## Compatibility
 
-* `git clone <repository-url>` this repository
-* `cd new-addon`
-* `npm install`
+* Ember.js v3.28 or above
+* Ember CLI v3.28 or above
+* Node.js v14 or above
+
+
+## Installation
+```
+ember install ember-cli-bootstrap-datepicker
+```
+
 
 ## Usage
 
