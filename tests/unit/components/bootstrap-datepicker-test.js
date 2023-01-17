@@ -1,6 +1,7 @@
 import { run } from '@ember/runloop';
 import { test, moduleForComponent } from 'ember-qunit';
 import startApp from '../../helpers/start-app';
+import $ from 'jquery';
 
 var App;
 
@@ -16,7 +17,7 @@ moduleForComponent('bootstrap-datepicker', 'BootstrapDatepickerComponent', {
 });
 
 test('is an input tag', function(assert) {
-  assert.equal(this.$().prop('tagName'), 'INPUT');
+  assert.equal($(this.element).prop('tagName'), 'INPUT');
 });
 
 test('displays empty input field when no date is set', function(assert) {
@@ -24,7 +25,7 @@ test('displays empty input field when no date is set', function(assert) {
     value: null
   });
 
-  assert.equal(this.$().val(), '');
+  assert.equal($(this.element).val(), '');
 });
 
 test('displays date with default format when no format is set', function(assert) {
@@ -32,7 +33,7 @@ test('displays date with default format when no format is set', function(assert)
     value: new Date(2014, 11, 31)
   });
 
-  assert.equal(this.$().val(), '12/31/2014');
+  assert.equal($(this.element).val(), '12/31/2014');
 });
 
 test('displays date with custom format when format is set', function(assert) {
@@ -41,7 +42,7 @@ test('displays date with custom format when format is set', function(assert) {
     format: 'dd.M.yy'
   });
 
-  assert.equal(this.$().val(), '31.Dec.14');
+  assert.equal($(this.element).val(), '31.Dec.14');
 });
 
 test('resets date when input is cleared', function(assert) {
@@ -49,12 +50,12 @@ test('resets date when input is cleared', function(assert) {
     value: new Date(2014, 11, 31)
   });
 
-  assert.ok(this.$().datepicker('getDate'), 'initial value is set');
+  assert.ok($(this.element).datepicker('getDate'), 'initial value is set');
 
-  this.$().val('');
-  this.$().datepicker('update');
+  $(this.element).val('');
+  $(this.element).datepicker('update');
 
-  assert.equal(this.$().datepicker('getDate'), null, 'value is reset when input is cleared');
+  assert.equal($(this.element).datepicker('getDate'), null, 'value is reset when input is cleared');
 });
 
 test('should use customParser if provided', function(assert) {
@@ -67,7 +68,7 @@ test('should use customParser if provided', function(assert) {
     }
   });
 
-  assert.equal(this.$().val(), '09/14/2015');
+  assert.equal($(this.element).val(), '09/14/2015');
 });
 
 test('sets dates provided by value (multidate, default multidateSeparator)', function(assert) {
@@ -76,8 +77,8 @@ test('sets dates provided by value (multidate, default multidateSeparator)', fun
     multidate: true
   });
 
-  assert.equal(this.$().val(), '01/13/2015,01/07/2015,01/15/2015', 'sets value as input field value');
-  assert.equal(this.$().datepicker('getDates').length, 3, 'sets internal datepicker dates by value');
+  assert.equal($(this.element).val(), '01/13/2015,01/07/2015,01/15/2015', 'sets value as input field value');
+  assert.equal($(this.element).datepicker('getDates').length, 3, 'sets internal datepicker dates by value');
 });
 
 test('sets dates provided by value (multidate, multidateSeparator provided)', function(assert) {
@@ -87,8 +88,8 @@ test('sets dates provided by value (multidate, multidateSeparator provided)', fu
     multidateSeparator: ';'
   });
 
-  assert.equal(this.$().val(), '01/13/2015;01/07/2015;01/15/2015', 'sets value as input field value using multidate separator');
-  assert.equal(this.$().datepicker('getDates').length, 3, 'sets internal datepicker dates by value');
+  assert.equal($(this.element).val(), '01/13/2015;01/07/2015;01/15/2015', 'sets value as input field value using multidate separator');
+  assert.equal($(this.element).datepicker('getDates').length, 3, 'sets internal datepicker dates by value');
 });
 
 test('updates startDate', function(assert) {
@@ -100,10 +101,10 @@ test('updates startDate', function(assert) {
     startDate: startDate
   });
 
-  assert.equal(this.$().data('datepicker').o.startDate.getUTCMonth(), startDate.getUTCMonth(), 'sets initial startDate');
+  assert.equal($(this.element).data('datepicker').o.startDate.getUTCMonth(), startDate.getUTCMonth(), 'sets initial startDate');
 
   component.set('startDate', newStartDate);
-  assert.equal(this.$().data('datepicker').o.startDate.getUTCMonth(), newStartDate.getUTCMonth(), 'updates startDate');
+  assert.equal($(this.element).data('datepicker').o.startDate.getUTCMonth(), newStartDate.getUTCMonth(), 'updates startDate');
 });
 
 test('updates format', function(assert) {
@@ -115,11 +116,11 @@ test('updates format', function(assert) {
     format: format
   });
 
-  assert.equal(this.$().data('datepicker').o.format, format, 'sets initial format');
+  assert.equal($(this.element).data('datepicker').o.format, format, 'sets initial format');
 
   component.set('format', newFormat);
 
-  assert.equal(this.$().data('datepicker').o.format, newFormat, 'updates format');
+  assert.equal($(this.element).data('datepicker').o.format, newFormat, 'updates format');
 });
 
 test('updates minViewMode', function(assert) {
@@ -133,9 +134,9 @@ test('updates minViewMode', function(assert) {
     minViewMode: minViewMode
   });
 
-  assert.equal(this.$().data('datepicker').o.minViewMode, yearsViewModeNumber, 'sets initial minViewMode');
+  assert.equal($(this.element).data('datepicker').o.minViewMode, yearsViewModeNumber, 'sets initial minViewMode');
 
   component.set('minViewMode', newMinViewMode);
 
-  assert.equal(this.$().data('datepicker').o.minViewMode, monthsViewModeNumber, 'updates minViewMode');
+  assert.equal($(this.element).data('datepicker').o.minViewMode, monthsViewModeNumber, 'updates minViewMode');
 });
