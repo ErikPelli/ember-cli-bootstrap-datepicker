@@ -3,6 +3,7 @@ import { observer } from '@ember/object';
 import { run } from '@ember/runloop';
 import { on } from '@ember/object/evented';
 import Mixin from '@ember/object/mixin';
+import $ from 'jquery';
 
 export default Mixin.create({
   mustUpdateInput: true,
@@ -19,7 +20,7 @@ export default Mixin.create({
 
   setupBootstrapDatepicker: on('didInsertElement', function() {
 
-    this.$().
+    $(this.element).
       datepicker({
         autoclose: this.get('autoclose'),
         calendarWeeks: this.get('calendarWeeks'),
@@ -79,7 +80,7 @@ export default Mixin.create({
   }),
 
   teardownBootstrapDatepicker: on('willDestroyElement', function() {
-    this.$().datepicker('destroy');
+    $(this.element).datepicker('destroy');
   }),
 
   didChangeValue: observer('value', function() {
@@ -91,9 +92,9 @@ export default Mixin.create({
 
     if (event.date) {
       if (this.get('multidate')) {
-        value = this.$().datepicker('getDates');
+        value = $(this.element).datepicker('getDates');
       } else {
-        value = this.$().datepicker('getDate');
+        value = $(this.element).datepicker('getDate');
       }
     }
 
@@ -108,41 +109,41 @@ export default Mixin.create({
 
   _addObservers: on('didInsertElement', function() {
     this.addObserver('language', function() {
-      this.$().datepicker('destroy');
+      $(this.element).datepicker('destroy');
       this.setupBootstrapDatepicker();
     });
 
     this.addObserver('startDate', function() {
-      this.$().datepicker('setStartDate', this.get('startDate'));
+      $(this.element).datepicker('setStartDate', this.get('startDate'));
       this._updateDatepicker();
     });
 
     this.addObserver('endDate', function() {
-      this.$().datepicker('setEndDate', this.get('endDate'));
+      $(this.element).datepicker('setEndDate', this.get('endDate'));
       this._updateDatepicker();
     });
 
     this.addObserver('datesDisabled', function() {
-      this.$().datepicker('setDatesDisabled', this.get('datesDisabled'));
+      $(this.element).datepicker('setDatesDisabled', this.get('datesDisabled'));
       this._updateDatepicker();
     });
 
     this.addObserver('minViewMode', function() {
-      this.$().datepicker('minViewMode', this.get('minViewMode'));
-      this.$().data('datepicker')._process_options({minViewMode: this.get('minViewMode')});
+      $(this.element).datepicker('minViewMode', this.get('minViewMode'));
+      $(this.element).data('datepicker')._process_options({minViewMode: this.get('minViewMode')});
       this._updateDatepicker();
     });
 
     this.addObserver('format', function() {
       let format = this._toString(this.get('format'));
-      this.$().datepicker('format', format);
-      this.$().data('datepicker')._process_options({format: format});
+      $(this.element).datepicker('format', format);
+      $(this.element).data('datepicker')._process_options({format: format});
       this._updateDatepicker();
     });
   }),
 
   _updateDatepicker: function() {
-    var element = this.$(),
+    var element = $(this.element),
         value = this.get('value'),
         customParser = this.get('customParser'),
         dates = [];

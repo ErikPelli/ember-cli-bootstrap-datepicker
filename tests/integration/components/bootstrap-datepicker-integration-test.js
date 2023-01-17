@@ -1,5 +1,6 @@
 import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
+import $ from 'jquery';
 
 moduleForComponent('bootstrap-datepicker', 'BootstrapDatepickerComponent', {
   integration: true
@@ -17,7 +18,7 @@ test('triggers specified action on focusout event', function (assert) {
     actionIsTriggered = true;
   });
 
-  this.$('input.ember-text-field').trigger('focusout');
+  $('input.ember-text-field', this.element).trigger('focusout');
 
   assert.ok(actionIsTriggered, 'action is triggered on focusout');
 });
@@ -34,7 +35,7 @@ test('triggers specified action on focusin event', function (assert) {
     actionIsTriggered = true;
   });
 
-  this.$('input.ember-text-field').trigger('focusin');
+  $('input.ember-text-field', this.element).trigger('focusin');
 
   assert.ok(actionIsTriggered, 'action is triggered on focusin');
 });
@@ -53,7 +54,7 @@ test('triggers changeDate action when date selection changes', function(assert) 
     {{bootstrap-datepicker value=myDate changeDate="myAction"}}
   `);
 
-  var input = this.$('input.ember-text-field');
+  var input = $('input.ember-text-field', this.element);
   input.datepicker('setDate', new Date());
 
   assert.ok(actionIsTriggered, 'action is triggered');
@@ -73,7 +74,7 @@ test('triggers clearDate action when date selection is cleared', function(assert
     {{bootstrap-datepicker value=myDate clearDate="myAction"}}
   `);
 
-  var input = this.$('input.ember-text-field');
+  var input = $('input.ember-text-field', this.element);
   input.datepicker('setDate', null);
 
   assert.ok(actionIsTriggered, 'action is triggered');
@@ -91,7 +92,7 @@ test('triggers show action when date datepicker is displayed', function(assert) 
     {{bootstrap-datepicker show="myAction"}}
   `);
 
-  this.$('input.ember-text-field').trigger('show');
+  $('input.ember-text-field', this.element).trigger('show');
 
   assert.ok(actionIsTriggered, 'action is triggered');
 });
@@ -108,7 +109,7 @@ test('triggers hide action when date datepicker is hidden', function(assert) {
     {{bootstrap-datepicker hide="myAction"}}
   `);
 
-  this.$('input.ember-text-field').trigger('hide');
+  $('input.ember-text-field', this.element).trigger('hide');
 
   assert.ok(actionIsTriggered, 'action is triggered');
 });
@@ -127,12 +128,12 @@ test('triggers changeMonth when month is changed', function(assert) {
   `);
 
   // there are several not visibile datepickers having .next; only trigger the visible one
-  this.$('.next:visible').trigger('click');
+  $('.next:visible', this.element).trigger('click');
   assert.ok(lastDate instanceof Date, 'date is passed to action as argument');
   // by default view date is today; so after a click on "next" it should be a date in the next month
   assert.equal(lastDate.getMonth(), new Date().getMonth() + 1, 'passed date is correct');
 
-  this.$('.prev:visible').trigger('click');
+  $('.prev:visible', this.element).trigger('click');
   assert.ok(lastDate instanceof Date, 'date is passed to action as argument');
   assert.equal(lastDate.getMonth(), new Date().getMonth(), 'passed date is correct');
 });
