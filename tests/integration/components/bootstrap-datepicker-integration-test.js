@@ -8,14 +8,14 @@ moduleForComponent('bootstrap-datepicker', 'BootstrapDatepickerComponent', {
 test('triggers specified action on focusout event', function (assert) {
   assert.expect(1);
 
-  this.render(hbs`
-    {{bootstrap-datepicker focus-out="focusOutAction"}}
-  `);
-
   var actionIsTriggered = false;
   this.on('focusOutAction', () => {
     actionIsTriggered = true;
   });
+
+  this.render(hbs`
+    {{bootstrap-datepicker focusOut=(action "focusOutAction")}}
+  `);
 
   this.$('input.ember-text-field').trigger('focusout');
 
@@ -25,14 +25,14 @@ test('triggers specified action on focusout event', function (assert) {
 test('triggers specified action on focusin event', function (assert) {
   assert.expect(1);
 
-  this.render(hbs`
-    {{bootstrap-datepicker focus-in="focusInAction"}}
-  `);
-
   var actionIsTriggered = false;
   this.on('focusInAction', () => {
     actionIsTriggered = true;
   });
+
+  this.render(hbs`
+    {{bootstrap-datepicker focusIn=(action "focusInAction")}}
+  `);
 
   this.$('input.ember-text-field').trigger('focusin');
 
@@ -50,7 +50,7 @@ test('triggers changeDate action when date selection changes', function(assert) 
   });
 
   this.render(hbs`
-    {{bootstrap-datepicker value=myDate changeDate="myAction"}}
+    {{bootstrap-datepicker value=myDate changeDate=(action "myAction")}}
   `);
 
   var input = this.$('input.ember-text-field');
@@ -70,7 +70,7 @@ test('triggers clearDate action when date selection is cleared', function(assert
   });
 
   this.render(hbs`
-    {{bootstrap-datepicker value=myDate clearDate="myAction"}}
+    {{bootstrap-datepicker value=myDate clearDate=(action "myAction")}}
   `);
 
   var input = this.$('input.ember-text-field');
@@ -88,7 +88,7 @@ test('triggers show action when date datepicker is displayed', function(assert) 
   });
 
   this.render(hbs`
-    {{bootstrap-datepicker show="myAction"}}
+    {{bootstrap-datepicker show=(action "myAction")}}
   `);
 
   this.$('input.ember-text-field').trigger('show');
@@ -105,7 +105,7 @@ test('triggers hide action when date datepicker is hidden', function(assert) {
   });
 
   this.render(hbs`
-    {{bootstrap-datepicker hide="myAction"}}
+    {{bootstrap-datepicker hide=(action "myAction")}}
   `);
 
   this.$('input.ember-text-field').trigger('hide');
@@ -123,7 +123,7 @@ test('triggers changeMonth when month is changed', function(assert) {
   });
 
   this.render(hbs`
-    {{bootstrap-datepicker-inline changeMonth="myAction"}}
+    {{bootstrap-datepicker-inline changeMonth=(action "myAction")}}
   `);
 
   // there are several not visibile datepickers having .next; only trigger the visible one
